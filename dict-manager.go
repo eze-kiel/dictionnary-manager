@@ -5,6 +5,7 @@ import "os"
 import "strings"
 import "strconv"
 import "os/exec"
+//import "io"
 
 /*
 Création d'un .txt avec le nom et le prénom
@@ -196,6 +197,9 @@ func options_menu() {
 	fmt.Println(" [q] : quitter")
 }
 
+/*
+Afficher les fichiers
+*/
 func show_existing_lists() {
     cmd := exec.Command("ls")
     stdout, err := cmd.Output()
@@ -206,6 +210,23 @@ func show_existing_lists() {
     }
 
     print(string(stdout))
+}
+
+/*
+Merger 2 fichiers
+*/ 
+func merge_files(first_file string, second_file string) {
+	in, err := os.Open(second_file)
+	if err != nil {
+		fmt.Println("Impossible d'ouvrir le second fichier:", err)
+	}
+	defer in.Close()
+
+	out, err := os.OpenFile(first_file, os.O_APPEND|os.O_WRONLY, 0644)
+	if err != nil {
+		fmt.Println("Impossible d'ouvrir le premier fichier:", err)
+	}
+	defer out.Close()
 }
 
 /*
@@ -263,7 +284,20 @@ func main() {
 				show_existing_lists()
 
 			case "m":
+				/*
+				var first_file string
+				var second_file string
+				*/
+
 				fmt.Println("en dev...")
+				/*
+				fmt.Println("Entre le nom du premier fichier :")
+  				fmt.Scanln(&first_file)
+  				fmt.Println("Entre le nom du second fichier :")
+  				fmt.Scanln(&second_file)
+
+				merge_files(first_file, second_file)
+				*/
 
 	    	case "d":
 	      		delete_list()
@@ -283,5 +317,6 @@ func main() {
 
 /* TODO
 merge -> entre les noms des listes qu'on veut fusionner pour une seule big liste
+quand 2 fois la même option, pas écraser -> compteur avec nb d'itération qui change le nom du file
 ...
 */
