@@ -7,6 +7,9 @@ import "strconv"
 import "os/exec"
 //import "io"
 
+/*
+Fonction générique pour l'écriture via les pointeurs des param
+*/
 func ask_full_name(ptr_firstname *string, ptr_surname *string) {
 	var firstname string
 	var surname string
@@ -43,6 +46,7 @@ func ask_full_name(ptr_firstname *string, ptr_surname *string) {
 		}
 	}
 }
+
 /*
 Création d'un .txt avec le nom et le prénom
 */
@@ -262,7 +266,7 @@ Fonction MAIN
 */
 
 func main() {
-	fmt.Println("*** h3ll0 h@ck3r! ***\n")
+	//fmt.Println("*** h3ll0 h@ck3r! ***\n")
 
 	app := "figlet"
 
@@ -278,7 +282,7 @@ func main() {
     }
 
     print(string(stdout))
-    
+
 	var firstname string
 	var surname string
 
@@ -308,6 +312,10 @@ func main() {
 
 			case "a":
 				fmt.Println("en dev...")
+				create_name_list(ptr_firstname, ptr_surname)
+				create_name_and_year_list(ptr_firstname, ptr_surname)
+				create_name_and_number_list(ptr_firstname, ptr_surname)
+				create_date_list()
 			
 			case "fa":
 				fmt.Println("en dev...")
