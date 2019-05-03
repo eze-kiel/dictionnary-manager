@@ -5,6 +5,7 @@ import "os"
 import "strings"
 import "strconv"
 import "os/exec"
+
 //import "io"
 
 /*
@@ -51,7 +52,7 @@ func ask_full_name(ptr_firstname *string, ptr_surname *string) {
 Création d'un .txt avec le nom et le prénom
 */
 func create_name_list(ptr_firstname *string, ptr_surname *string) {
-	 ask_full_name(ptr_firstname, ptr_surname)
+	ask_full_name(ptr_firstname, ptr_surname)
 
 	//créer le fichier
 	f, err := os.Create("name.txt")
@@ -72,7 +73,6 @@ func create_name_list(ptr_firstname *string, ptr_surname *string) {
 	fmt.Println("Fait !")
 }
 
-
 /*
 Création d'un .txt avec le nom, prénom et année
 */
@@ -81,8 +81,8 @@ func create_name_and_year_list(ptr_firstname *string, ptr_surname *string) {
 
 	ask_full_name(ptr_firstname, ptr_surname)
 
-		fmt.Println("Entre l'année : ")
-		fmt.Scanln(&year)
+	fmt.Println("Entre l'année : ")
+	fmt.Scanln(&year)
 
 	//créer le fichier
 	f, err := os.Create("nameyear.txt")
@@ -103,14 +103,13 @@ func create_name_and_year_list(ptr_firstname *string, ptr_surname *string) {
 	fmt.Println("Fait !")
 }
 
-
 /*
 Création d'un .txt avec le nom, prénom et nombres
 */
 func create_name_and_number_list(ptr_firstname *string, ptr_surname *string) {
 
-		var min int
-  	var max int
+	var min int
+	var max int
 
 	ask_full_name(ptr_firstname, ptr_surname)
 
@@ -128,15 +127,15 @@ func create_name_and_number_list(ptr_firstname *string, ptr_surname *string) {
 
 	//écrire dedans
 	for i := min; i <= max; i++ {
-    	f.WriteString(*ptr_firstname + *ptr_surname + strconv.FormatInt(int64(i), 10) + "\n")
-    	f.WriteString(*ptr_surname + *ptr_firstname + strconv.FormatInt(int64(i), 10) + "\n")
-	  	f.WriteString(strings.ToUpper(*ptr_firstname) + strings.ToUpper(*ptr_surname) + strconv.FormatInt(int64(i), 10) + "\n")
-	  	f.WriteString(strings.ToUpper(*ptr_surname) + strings.ToUpper(*ptr_firstname) + strconv.FormatInt(int64(i), 10) + "\n")
-	  	f.WriteString(strings.ToLower(*ptr_firstname) + strings.ToLower(*ptr_surname) + strconv.FormatInt(int64(i), 10) + "\n")
-	  	f.WriteString(strings.ToLower(*ptr_surname) + strings.ToLower(*ptr_firstname) + strconv.FormatInt(int64(i), 10) + "\n")
-	  }
-	
- 	f.Close()
+		f.WriteString(*ptr_firstname + *ptr_surname + strconv.FormatInt(int64(i), 10) + "\n")
+		f.WriteString(*ptr_surname + *ptr_firstname + strconv.FormatInt(int64(i), 10) + "\n")
+		f.WriteString(strings.ToUpper(*ptr_firstname) + strings.ToUpper(*ptr_surname) + strconv.FormatInt(int64(i), 10) + "\n")
+		f.WriteString(strings.ToUpper(*ptr_surname) + strings.ToUpper(*ptr_firstname) + strconv.FormatInt(int64(i), 10) + "\n")
+		f.WriteString(strings.ToLower(*ptr_firstname) + strings.ToLower(*ptr_surname) + strconv.FormatInt(int64(i), 10) + "\n")
+		f.WriteString(strings.ToLower(*ptr_surname) + strings.ToLower(*ptr_firstname) + strconv.FormatInt(int64(i), 10) + "\n")
+	}
+
+	f.Close()
 	fmt.Println("Fait !")
 }
 
@@ -160,18 +159,18 @@ func create_date_list() {
 				if m < 10 {
 
 					if d < 10 {
-						f.WriteString("0"+strconv.FormatInt(int64(d), 10)+"0"+strconv.FormatInt(int64(m), 10)+strconv.FormatInt(int64(y), 10)+"\n")
-						f.WriteString(strconv.FormatInt(int64(y), 10)+"0"+strconv.FormatInt(int64(m), 10)+"0"+strconv.FormatInt(int64(d), 10)+"\n")
+						f.WriteString("0" + strconv.FormatInt(int64(d), 10) + "0" + strconv.FormatInt(int64(m), 10) + strconv.FormatInt(int64(y), 10) + "\n")
+						f.WriteString(strconv.FormatInt(int64(y), 10) + "0" + strconv.FormatInt(int64(m), 10) + "0" + strconv.FormatInt(int64(d), 10) + "\n")
 					} else {
-						f.WriteString(strconv.FormatInt(int64(d), 10)+"0"+strconv.FormatInt(int64(m), 10)+strconv.FormatInt(int64(y), 10)+"\n")
-						f.WriteString(strconv.FormatInt(int64(y), 10)+"0"+strconv.FormatInt(int64(m), 10)+strconv.FormatInt(int64(d), 10)+"\n")
+						f.WriteString(strconv.FormatInt(int64(d), 10) + "0" + strconv.FormatInt(int64(m), 10) + strconv.FormatInt(int64(y), 10) + "\n")
+						f.WriteString(strconv.FormatInt(int64(y), 10) + "0" + strconv.FormatInt(int64(m), 10) + strconv.FormatInt(int64(d), 10) + "\n")
 					}
 				} else if d < 10 {
-					f.WriteString("0"+strconv.FormatInt(int64(d), 10)+strconv.FormatInt(int64(m), 10)+strconv.FormatInt(int64(y), 10)+"\n")
-					f.WriteString(strconv.FormatInt(int64(y), 10)+strconv.FormatInt(int64(m), 10)+"0"+strconv.FormatInt(int64(d), 10)+"\n")
+					f.WriteString("0" + strconv.FormatInt(int64(d), 10) + strconv.FormatInt(int64(m), 10) + strconv.FormatInt(int64(y), 10) + "\n")
+					f.WriteString(strconv.FormatInt(int64(y), 10) + strconv.FormatInt(int64(m), 10) + "0" + strconv.FormatInt(int64(d), 10) + "\n")
 				} else {
-					f.WriteString(strconv.FormatInt(int64(d), 10)+strconv.FormatInt(int64(m), 10)+strconv.FormatInt(int64(y), 10)+"\n")
-					f.WriteString(strconv.FormatInt(int64(y), 10)+strconv.FormatInt(int64(m), 10)+strconv.FormatInt(int64(d), 10)+"\n")
+					f.WriteString(strconv.FormatInt(int64(d), 10) + strconv.FormatInt(int64(m), 10) + strconv.FormatInt(int64(y), 10) + "\n")
+					f.WriteString(strconv.FormatInt(int64(y), 10) + strconv.FormatInt(int64(m), 10) + strconv.FormatInt(int64(d), 10) + "\n")
 				}
 			}
 		}
@@ -185,31 +184,30 @@ Supprimer un fichier
 */
 func delete_list() {
 	var name string
-  
-  	fmt.Println("Entre le nom du fichier à supprimer :")
-  	fmt.Scanln(&name)
 
-  	if strings.Contains(name, "/") == true {
-    	fmt.Println("Le fichier doit être dans le même répertoire que ce script !")
-  	} else if strings.Contains(name, ".go") == true {
-  		fmt.Println("Bien tenté")
-  	} else {
-  		fmt.Println("Suppression de " + name)
-    	os.Remove(name)
-    	fmt.Println("Supprimé !")
-  	}
+	fmt.Println("Entre le nom du fichier à supprimer :")
+	fmt.Scanln(&name)
+
+	if strings.Contains(name, "/") {
+		fmt.Println("Le fichier doit être dans le même répertoire que ce script !")
+	} else if strings.Contains(name, ".go") {
+		fmt.Println("Bien tenté")
+	} else {
+		fmt.Println("Suppression de " + name)
+		os.Remove(name)
+		fmt.Println("Supprimé !")
+	}
 }
-
 
 /*
 Afficher les options
 */
 func options_menu() {
 	fmt.Println("Options de création :")
-  	fmt.Println(" [1] : nom uniquement")
+	fmt.Println(" [1] : nom uniquement")
 	fmt.Println(" [2] : nom + année")
-  	fmt.Println(" [3] : nom + nombre")
-  	fmt.Println(" [4] : dates")
+	fmt.Println(" [3] : nom + nombre")
+	fmt.Println(" [4] : dates")
 	fmt.Println(" [a] : toutes les options ci-dessus, dans des fichiers différents")
 	fmt.Println(" [fa]: toutes les options ci-dessus (- a) dans un même fichier")
 	fmt.Println("\nOptions de modification :")
@@ -233,20 +231,20 @@ func show_parameters(ptr_firstname *string, ptr_surname *string) {
 Afficher les fichiers
 */
 func show_existing_lists() {
-    cmd := exec.Command("ls")
-    stdout, err := cmd.Output()
+	cmd := exec.Command("ls")
+	stdout, err := cmd.Output()
 
-    if err != nil {
-        println(err.Error())
-        return
-    }
+	if err != nil {
+		println(err.Error())
+		return
+	}
 
-    print(string(stdout))
+	print(string(stdout))
 }
 
 /*
 Merger 2 fichiers
-*/ 
+*/
 func merge_files(first_file string, second_file string) {
 	in, err := os.Open(second_file)
 	if err != nil {
@@ -270,18 +268,18 @@ func main() {
 
 	app := "figlet"
 
-    arg0 := "h3ll0"
-    arg1 := "\nH@ck3r !"
+	arg0 := "h3ll0"
+	arg1 := "\nH@ck3r !"
 
-    cmd := exec.Command(app, arg0, arg1)
-    stdout, err := cmd.Output()
+	cmd := exec.Command(app, arg0, arg1)
+	stdout, err := cmd.Output()
 
-    if err != nil {
-        println(err.Error())
-        return
-    }
+	if err != nil {
+		println(err.Error())
+		return
+	}
 
-    print(string(stdout))
+	print(string(stdout))
 
 	var firstname string
 	var surname string
@@ -298,61 +296,61 @@ func main() {
 		fmt.Scanln(&choix)
 
 		switch choix {
-			case "1":
-				create_name_list(ptr_firstname, ptr_surname)
+		case "1":
+			create_name_list(ptr_firstname, ptr_surname)
 
-			case "2":
-				create_name_and_year_list(ptr_firstname, ptr_surname)
+		case "2":
+			create_name_and_year_list(ptr_firstname, ptr_surname)
 
-	    	case "3":
-	      		create_name_and_number_list(ptr_firstname, ptr_surname)
+		case "3":
+			create_name_and_number_list(ptr_firstname, ptr_surname)
 
-	      	case "4":
-	      		create_date_list()
+		case "4":
+			create_date_list()
 
-			case "a":
-				fmt.Println("en dev...")
-				create_name_list(ptr_firstname, ptr_surname)
-				create_name_and_year_list(ptr_firstname, ptr_surname)
-				create_name_and_number_list(ptr_firstname, ptr_surname)
-				create_date_list()
-			
-			case "fa":
-				fmt.Println("en dev...")
+		case "a":
+			fmt.Println("en dev...")
+			create_name_list(ptr_firstname, ptr_surname)
+			create_name_and_year_list(ptr_firstname, ptr_surname)
+			create_name_and_number_list(ptr_firstname, ptr_surname)
+			create_date_list()
 
-			case "ls":
-				show_existing_lists()
+		case "fa":
+			fmt.Println("en dev...")
 
-			case "m":
-				/*
+		case "ls":
+			show_existing_lists()
+
+		case "m":
+			/*
 				var first_file string
 				var second_file string
-				*/
+			*/
 
-				fmt.Println("en dev...")
-				/*
-				fmt.Println("Entre le nom du premier fichier :")
-  				fmt.Scanln(&first_file)
-  				fmt.Println("Entre le nom du second fichier :")
-  				fmt.Scanln(&second_file)
-				merge_files(first_file, second_file)
-				*/
+			fmt.Println("en dev...")
+			/*
+							fmt.Println("Entre le nom du premier fichier :")
+			  				fmt.Scanln(&first_file)
+			  				fmt.Println("Entre le nom du second fichier :")
+			  				fmt.Scanln(&second_file)
+							merge_files(first_file, second_file)
+			*/
 
-	    	case "d":
-	      		delete_list()
+		case "d":
+			delete_list()
 
-			case "h":
-				options_menu()
+		case "h":
+			options_menu()
 
-			case "p":
-				show_parameters(ptr_firstname, ptr_surname)
+		case "p":
+			show_parameters(ptr_firstname, ptr_surname)
 
-			case "q":
-				fmt.Println("Au revoir !")
-				os.Exit(0)
+		case "q":
+			fmt.Println("Au revoir !")
+			os.Exit(0)
 
-			default:
-				fmt.Println("Commande inconnue, h pour afficher les options")
+		default:
+			fmt.Println("Commande inconnue, h pour afficher les options")
 		}
 	}
 }
