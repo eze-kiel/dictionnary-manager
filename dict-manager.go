@@ -7,18 +7,47 @@ import "strconv"
 import "os/exec"
 //import "io"
 
-/*
-Création d'un .txt avec le nom et le prénom
-*/
-func create_name_list() {
+func ask_full_name(ptr_firstname *string, ptr_surname *string) {
 	var firstname string
 	var surname string
 
-	fmt.Println("Attention : Mets la majuscule au début de chaque mot !")
-	fmt.Println(("Prénom :"))
-	fmt.Scanln(&firstname)
-	fmt.Println(("\nNom :"))
-	fmt.Scanln(&surname)
+	if len(*ptr_firstname) == 0 {
+		fmt.Println("Attention : Mets la majuscule au début de chaque mot !")
+		fmt.Println(("Prénom :"))
+		fmt.Scanln(&firstname)
+		fmt.Println(("\nNom :"))
+		fmt.Scanln(&surname)
+		*ptr_firstname = strings.ToTitle(firstname)
+		*ptr_surname = strings.ToTitle(surname)
+
+	} else {
+		var choix_id string
+		show_parameters(ptr_firstname, ptr_surname)
+		fmt.Println("\nGarder les mêmes paramètres ? (y/n)")
+		fmt.Scanln(&choix_id)
+
+		if choix_id == "y" {
+
+		} else if choix_id == "n" {
+			fmt.Println("Attention : Mets la majuscule au début de chaque mot !")
+			fmt.Println(("Prénom :"))
+			fmt.Scanln(&firstname)
+			fmt.Println(("\nNom :"))
+			fmt.Scanln(&surname)
+
+			*ptr_firstname = firstname
+			*ptr_surname = surname
+		} else {
+			fmt.Println("Réponse inconnue, retour au menu")
+			return
+		}
+	}
+}
+/*
+Création d'un .txt avec le nom et le prénom
+*/
+func create_name_list(ptr_firstname *string, ptr_surname *string) {
+	 ask_full_name(ptr_firstname, ptr_surname)
 
 	//créer le fichier
 	f, err := os.Create("name.txt")
@@ -28,12 +57,12 @@ func create_name_list() {
 	}
 
 	//écrire dedans
-	f.WriteString(firstname + surname + "\n")
-	f.WriteString(surname + firstname + "\n")
-	f.WriteString(strings.ToUpper(firstname) + strings.ToUpper(surname) + "\n")
-	f.WriteString(strings.ToUpper(surname) + strings.ToUpper(firstname) + "\n")
-	f.WriteString(strings.ToLower(firstname) + strings.ToLower(surname) + "\n")
-	f.WriteString(strings.ToLower(surname) + strings.ToLower(firstname))
+	f.WriteString(*ptr_firstname + *ptr_surname + "\n")
+	f.WriteString(*ptr_surname + *ptr_firstname + "\n")
+	f.WriteString(strings.ToUpper(*ptr_firstname) + strings.ToUpper(*ptr_surname) + "\n")
+	f.WriteString(strings.ToUpper(*ptr_surname) + strings.ToUpper(*ptr_firstname) + "\n")
+	f.WriteString(strings.ToLower(*ptr_firstname) + strings.ToLower(*ptr_surname) + "\n")
+	f.WriteString(strings.ToLower(*ptr_surname) + strings.ToLower(*ptr_firstname))
 
 	f.Close()
 	fmt.Println("Fait !")
@@ -43,18 +72,13 @@ func create_name_list() {
 /*
 Création d'un .txt avec le nom, prénom et année
 */
-func create_name_and_year_list() {
-	var firstname string
-	var surname string
+func create_name_and_year_list(ptr_firstname *string, ptr_surname *string) {
 	var year string
 
-	fmt.Println("Attention : Mets la majuscule au début de chaque mot !")
-	fmt.Println(("Prénom :"))
-	fmt.Scanln(&firstname)
-	fmt.Println(("\nNom :"))
-	fmt.Scanln(&surname)
-	fmt.Println(("\nAnnée :"))
-	fmt.Scanln(&year)
+	ask_full_name(ptr_firstname, ptr_surname)
+
+		fmt.Println("Entre l'année : ")
+		fmt.Scanln(&year)
 
 	//créer le fichier
 	f, err := os.Create("nameyear.txt")
@@ -64,31 +88,27 @@ func create_name_and_year_list() {
 	}
 
 	//écrire dedans
-	f.WriteString(firstname + surname + year + "\n")
-	f.WriteString(surname + firstname + year + "\n")
-	f.WriteString(strings.ToUpper(firstname) + strings.ToUpper(surname) + year + "\n")
-	f.WriteString(strings.ToUpper(surname) + strings.ToUpper(firstname) + year + "\n")
-	f.WriteString(strings.ToLower(firstname) + strings.ToLower(surname) + year + "\n")
-	f.WriteString(strings.ToLower(surname) + strings.ToLower(firstname) + year)
+	f.WriteString(*ptr_firstname + *ptr_surname + year + "\n")
+	f.WriteString(*ptr_surname + *ptr_firstname + year + "\n")
+	f.WriteString(strings.ToUpper(*ptr_firstname) + strings.ToUpper(*ptr_surname) + year + "\n")
+	f.WriteString(strings.ToUpper(*ptr_surname) + strings.ToUpper(*ptr_firstname) + year + "\n")
+	f.WriteString(strings.ToLower(*ptr_firstname) + strings.ToLower(*ptr_surname) + year + "\n")
+	f.WriteString(strings.ToLower(*ptr_surname) + strings.ToLower(*ptr_firstname) + year)
 
 	f.Close()
 	fmt.Println("Fait !")
 }
 
+
 /*
 Création d'un .txt avec le nom, prénom et nombres
 */
-func create_name_and_number_list() {
-  	var firstname string
-	var surname string
-	var min int
+func create_name_and_number_list(ptr_firstname *string, ptr_surname *string) {
+
+		var min int
   	var max int
 
-	fmt.Println("Attention : Mets la majuscule au début de chaque mot !")
-	fmt.Println(("Prénom :"))
-	fmt.Scanln(&firstname)
-	fmt.Println(("\nNom :"))
-	fmt.Scanln(&surname)
+	ask_full_name(ptr_firstname, ptr_surname)
 
 	fmt.Println(("\nnombre min :"))
 	fmt.Scanln(&min)
@@ -104,12 +124,12 @@ func create_name_and_number_list() {
 
 	//écrire dedans
 	for i := min; i <= max; i++ {
-    	f.WriteString(firstname + surname + strconv.FormatInt(int64(i), 10) + "\n")
-    	f.WriteString(surname + firstname + strconv.FormatInt(int64(i), 10) + "\n")
-	  	f.WriteString(strings.ToUpper(firstname) + strings.ToUpper(surname) + strconv.FormatInt(int64(i), 10) + "\n")
-	  	f.WriteString(strings.ToUpper(surname) + strings.ToUpper(firstname) + strconv.FormatInt(int64(i), 10) + "\n")
-	  	f.WriteString(strings.ToLower(firstname) + strings.ToLower(surname) + strconv.FormatInt(int64(i), 10) + "\n")
-	  	f.WriteString(strings.ToLower(surname) + strings.ToLower(firstname) + strconv.FormatInt(int64(i), 10) + "\n")
+    	f.WriteString(*ptr_firstname + *ptr_surname + strconv.FormatInt(int64(i), 10) + "\n")
+    	f.WriteString(*ptr_surname + *ptr_firstname + strconv.FormatInt(int64(i), 10) + "\n")
+	  	f.WriteString(strings.ToUpper(*ptr_firstname) + strings.ToUpper(*ptr_surname) + strconv.FormatInt(int64(i), 10) + "\n")
+	  	f.WriteString(strings.ToUpper(*ptr_surname) + strings.ToUpper(*ptr_firstname) + strconv.FormatInt(int64(i), 10) + "\n")
+	  	f.WriteString(strings.ToLower(*ptr_firstname) + strings.ToLower(*ptr_surname) + strconv.FormatInt(int64(i), 10) + "\n")
+	  	f.WriteString(strings.ToLower(*ptr_surname) + strings.ToLower(*ptr_firstname) + strconv.FormatInt(int64(i), 10) + "\n")
 	  }
 	
  	f.Close()
@@ -194,7 +214,15 @@ func options_menu() {
 	fmt.Println(" [d] : supprimer un fichier")
 	fmt.Println("\nOptions diverses :")
 	fmt.Println(" [h] : menu d'aide")
+	fmt.Println(" [p] : afficher les paramètres actuels")
 	fmt.Println(" [q] : quitter")
+
+}
+
+func show_parameters(ptr_firstname *string, ptr_surname *string) {
+	fmt.Println("\nParamètres actuels :")
+	fmt.Println(" Prénom : ", *ptr_firstname)
+	fmt.Println(" Nom : ", *ptr_surname)
 }
 
 /*
@@ -230,13 +258,11 @@ func merge_files(first_file string, second_file string) {
 }
 
 /*
-
 Fonction MAIN
-
 */
 
 func main() {
-	//fmt.Println("*** 1337 h@x3r i5 b@ck! ***\n")
+	fmt.Println("*** h3ll0 h@ck3r! ***\n")
 
 	app := "figlet"
 
@@ -252,6 +278,12 @@ func main() {
     }
 
     print(string(stdout))
+    
+	var firstname string
+	var surname string
+
+	var ptr_firstname *string = &firstname
+	var ptr_surname *string = &surname
 
 	options_menu()
 
@@ -263,13 +295,13 @@ func main() {
 
 		switch choix {
 			case "1":
-				create_name_list()
+				create_name_list(ptr_firstname, ptr_surname)
 
 			case "2":
-				create_name_and_year_list()
+				create_name_and_year_list(ptr_firstname, ptr_surname)
 
 	    	case "3":
-	      		create_name_and_number_list()
+	      		create_name_and_number_list(ptr_firstname, ptr_surname)
 
 	      	case "4":
 	      		create_date_list()
@@ -295,7 +327,6 @@ func main() {
   				fmt.Scanln(&first_file)
   				fmt.Println("Entre le nom du second fichier :")
   				fmt.Scanln(&second_file)
-
 				merge_files(first_file, second_file)
 				*/
 
@@ -304,6 +335,9 @@ func main() {
 
 			case "h":
 				options_menu()
+
+			case "p":
+				show_parameters(ptr_firstname, ptr_surname)
 
 			case "q":
 				fmt.Println("Au revoir !")
@@ -317,6 +351,9 @@ func main() {
 
 /* TODO
 merge -> entre les noms des listes qu'on veut fusionner pour une seule big liste
+
 quand 2 fois la même option, pas écraser -> compteur avec nb d'itération qui change le nom du file
+
+automatiser la majuscule lors de la saisie user du nom/prénom (strings.ToUpper un truc du style)
 ...
 */
